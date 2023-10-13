@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 
-const tmdbRouter = require("./routes/tmdb");
 const { errorHandler } = require("./middlewares/errorHandler");
 
 // server initilization
@@ -21,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.use("/api/v1/tmdb", tmdbRouter);
+app.use("/api/v1/tmdb", require("./routes/tmdbRoutes"));
 
 app.use(errorHandler);
 

@@ -9,5 +9,6 @@ router.get("/popular", tmdbController.popularSeries);
 router.get("/top", tmdbController.topRatedSeries);
 router.get("/account", tmdbController.accountDetails);
 router.get("/configuration", tmdbController.getConfiguration);
+router.get("/:serieId", tmdbController.getSerieDetailsById);
 
 module.exports = router;

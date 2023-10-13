@@ -1,9 +1,21 @@
 const asyncHandler = require("express-async-handler");
 
 const searchSerie = asyncHandler(async (req, res) => {
-  // const response = await fetch(``)
+  const { language = "de", query } = req.query;
+  console.log(language, query);
 
-  res.send("searchSerie touched");
+  // eslint-disable-next-line no-undef
+  const url = `${process.env.TMDB_API_URL_SEARCH_TV}?language=${language}&query=${query}&api_key=${process.env.TMDB_API_KEY}`;
+
+  const response = await fetch(url);
+
+  const data = await response.json();
+
+  res.send({
+    results: data.results,
+    total_pages: data.total_pages,
+    total_results: data.total_results,
+  });
 });
 
 const popularSeries = asyncHandler(async (req, res) => {
@@ -64,10 +76,23 @@ const getConfiguration = asyncHandler(async (req, res) => {
   res.json(data);
 });
 
+const getSerieDetailsById = asyncHandler(async (req, res) => {
+  const { serieId } = req.params;
+
+  const response = await fetch(
+    // eslint-disable-next-line no-undef
+    `${process.env.TMDB_API_URL_TV}/${serieId}?api_key=${process.env.TMDB_API_KEY}&language=de`
+  );
+
+  const data = await response.json();
+  res.json(data);
+});
+
 module.exports = {
   searchSerie,
   popularSeries,
   topRatedSeries,
   accountDetails,
   getConfiguration,
+  getSerieDetailsById,
 };
