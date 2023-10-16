@@ -9,6 +9,11 @@ router.get("/popular", tmdbController.popularSeries);
 router.get("/top", tmdbController.topRatedSeries);
 router.get("/account", tmdbController.accountDetails);
 router.get("/configuration", tmdbController.getConfiguration);
-router.get("/:serieId", tmdbController.getSerieDetailsById);
+router.get("/:seriesId", tmdbController.getSerieDetailsById);
+router.get("/:seriesId/:seasonNumber", tmdbController.getSeasonBySeasonNumber);
+router.get(
+  "/:seriesId/:seasonNumber/:episodeNumber",
+  tmdbController.getEpisodeDetailsByEpisodeNumber
+);
 
 module.exports = router;

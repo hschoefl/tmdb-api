@@ -77,14 +77,42 @@ const getConfiguration = asyncHandler(async (req, res) => {
 });
 
 const getSerieDetailsById = asyncHandler(async (req, res) => {
-  const { serieId } = req.params;
+  const { seriesId } = req.params;
 
   const response = await fetch(
     // eslint-disable-next-line no-undef
-    `${process.env.TMDB_API_URL_TV}/${serieId}?api_key=${process.env.TMDB_API_KEY}&language=de`
+    `${process.env.TMDB_API_URL_TV}/${seriesId}?api_key=${process.env.TMDB_API_KEY}&language=de`
   );
 
   const data = await response.json();
+  res.json(data);
+});
+
+const getSeasonBySeasonNumber = asyncHandler(async (req, res) => {
+  const { seriesId, seasonNumber } = req.params;
+
+  const response = await fetch(
+    // eslint-disable-next-line no-undef
+    `${process.env.TMDB_API_URL_TV}/${seriesId}/season/${seasonNumber}?api_key=${process.env.TMDB_API_KEY}&language=de`
+  );
+
+  const data = await response.json();
+
+  res.json(data);
+});
+
+// https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}/episode/{episode_number}
+
+const getEpisodeDetailsByEpisodeNumber = asyncHandler(async (req, res) => {
+  const { seriesId, seasonNumber, episodeNumber } = req.params;
+
+  const response = await fetch(
+    // eslint-disable-next-line no-undef
+    `${process.env.TMDB_API_URL_TV}/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${process.env.TMDB_API_KEY}&language=de`
+  );
+
+  const data = await response.json();
+
   res.json(data);
 });
 
@@ -95,4 +123,6 @@ module.exports = {
   accountDetails,
   getConfiguration,
   getSerieDetailsById,
+  getSeasonBySeasonNumber,
+  getEpisodeDetailsByEpisodeNumber,
 };
